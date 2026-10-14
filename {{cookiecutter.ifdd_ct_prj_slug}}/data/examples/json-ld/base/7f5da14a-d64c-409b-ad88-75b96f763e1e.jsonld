@@ -1,0 +1,10 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/base.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/products/7f5da14a-d64c-409b-ad88-75b96f763e1e",
+  "aspect": "product",
+  "type": "TestData/Product",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "objName": "Device Cluster",
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}

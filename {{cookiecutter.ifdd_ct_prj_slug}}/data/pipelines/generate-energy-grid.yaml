@@ -1,0 +1,19 @@
+# Generate a reproducible energy grid and load it into the backend.
+#   ./adm_02_run.sh -f pipelines/generate-energy-grid.yaml
+# Try it without the backend first: replace 'put' by 'put: {dry_run: true}'.
+#
+# 'check' compares every document with its @context from the schema service
+# (IFDD_CT_SCHEMA_URL) and stops before anything is written if a term is not
+# defined there. The same seed gives the same documents, so running the
+# pipeline again changes nothing in the backend.
+steps:
+  - faker:
+      profile: energy-grid
+      seed: 42
+      product: 20
+      function: 8
+      location: 5
+      organisation: 4
+  - check:
+      fail: true
+  - put

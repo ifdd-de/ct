@@ -1,0 +1,23 @@
+# Configuration of the throw-away stack for the integration job in
+# template-test.yml: one file for the keycloak, schema and ct templates.
+# Plain HTTP on localhost, no proxy; the job starts each service itself.
+#
+# The keycloak template insists on an https realm URL. It only needs it for
+# the realm name and the redirect URIs; the issuer of the tokens is set by
+# the running Keycloak (here http://localhost:8080/realms/ifdd-it), and the
+# job passes exactly that to the backend.
+default_context:
+  ifdd_ct_prj_name: CT IT
+  ifdd_keycloak_prj_name: Keycloak IT
+  ifdd_schema_prj_name: Schema IT
+  ifdd_oidc_realm: "https://localhost/realms/ifdd-it"
+  ifdd_oidc_token_url: "http://localhost:8080/realms/ifdd-it/protocol/openid-connect/token"
+  ifdd_oidc_backend_client_id: ifdd-it
+  ifdd_oidc_jwks_audience: ifdd-it
+  ifdd_keycloak_ct_client_id: ifdd-ct
+  ifdd_keycloak_api_client_id: ifdd-api-script
+  ifdd_be_url: "http://localhost:8881"
+  ifdd_ui_url: "http://localhost:3000"
+  ifdd_schema_url: "http://localhost:8090/v1"
+  ifdd_type_url: "http://localhost:8090/type/v1"
+  ifdd_unit_url: "http://localhost:8090/unit/v1"

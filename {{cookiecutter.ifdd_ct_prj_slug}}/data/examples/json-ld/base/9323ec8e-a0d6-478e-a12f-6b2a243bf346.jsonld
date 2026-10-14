@@ -1,0 +1,10 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/base.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/products/9323ec8e-a0d6-478e-a12f-6b2a243bf346",
+  "aspect": "product",
+  "type": "TestData/Product",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "objName": "Device 3",
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}

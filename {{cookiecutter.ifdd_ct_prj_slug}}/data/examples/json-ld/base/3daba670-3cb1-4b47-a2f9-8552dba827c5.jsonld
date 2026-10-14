@@ -1,0 +1,10 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/base.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/locations/3daba670-3cb1-4b47-a2f9-8552dba827c5",
+  "aspect": "location",
+  "type": "TestData/Location",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "objName": "Location 1",
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}

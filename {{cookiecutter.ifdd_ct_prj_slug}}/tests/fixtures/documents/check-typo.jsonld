@@ -1,0 +1,13 @@
+[
+  {
+    "@context": "https://schema.test/v1/strict.jsonld",
+    "@id": "https://rest.test/products/typo-1",
+    "nmae": "Transformer 1",
+    "size": 3
+  },
+  {
+    "@context": "https://schema.test/v1/strict.jsonld",
+    "@id": "https://rest.test/products/typo-2",
+    "name": "Bushing"
+  }
+]

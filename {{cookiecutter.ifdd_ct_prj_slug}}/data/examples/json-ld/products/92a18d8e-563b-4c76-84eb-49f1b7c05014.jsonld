@@ -1,0 +1,22 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/product.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/products/92a18d8e-563b-4c76-84eb-49f1b7c05014",
+  "type": "TestData/Product",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "description": "more description - Device 2",
+  "objName": "Device 2",
+  "manufacturer": "ACME Ltd.",
+  "containedIn": {
+    "@id": "{{cookiecutter.ifdd_be_url}}/locations/743379b2-9dd8-4c80-ae80-b439e803d1ba"
+  },
+  "providesFunction": [
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/functions/92d9f821-97ae-471b-b234-5be6c22c392e"
+    }
+  ],
+  "isPartOf": {
+    "@id": "{{cookiecutter.ifdd_be_url}}/products/7f5da14a-d64c-409b-ad88-75b96f763e1e"
+  },
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}

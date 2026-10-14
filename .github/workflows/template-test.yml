@@ -1,0 +1,226 @@
+name: Template
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  render:
+    name: Render, test and build (${{ matrix.fixture }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        fixture: [defaults, custom]
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: template
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+
+      - name: Install tooling
+        run: pip install cookiecutter
+
+      - name: Render
+        run: |
+          cookiecutter --no-input --config-file template/tests/fixtures/${{ matrix.fixture }}.yaml \
+            --output-dir rendered template
+          INSTANCE=$(find rendered -mindepth 1 -maxdepth 1 -type d | head -1)
+          echo "INSTANCE=$INSTANCE" >> "$GITHUB_ENV"
+
+      - name: No template placeholders and no legacy names left
+        run: |
+          if grep -rl --exclude-dir=.github "cookiecutter\." "$INSTANCE"; then
+            echo "unrendered placeholders found"; exit 1
+          fi
+          if grep -rliE --exclude=requirements.txt '\bdd4' "$INSTANCE"; then
+            echo "legacy names found"; exit 1
+          fi
+
+      - name: The client id comes from the template, the secret stays empty
+        run: |
+          grep -qx 'IFDD_CT_OIDC_CLIENT_ID=ifdd-ct' "$INSTANCE/.env"
+          grep -qx 'IFDD_CT_OIDC_CLIENT_SECRET=' "$INSTANCE/.env"
+
+      - name: A shell can source .env, the aspects stay valid JSON
+        working-directory: ${{ env.INSTANCE }}
+        run: |
+          set -a; . ./.env; set +a
+          python -c 'import json, os; json.loads(os.environ["IFDD_CT_ASPECTS"])'
+
+      - name: The hook rejects a single quote in ifdd_be_aspects
+        run: |
+          if cookiecutter --no-input --output-dir rejected template \
+              "ifdd_be_aspects={\"products\": \"it's\"}"; then
+            echo "the hook should have rejected the single quote"; exit 1
+          fi
+
+      - name: Install and test the instance
+        working-directory: ${{ env.INSTANCE }}
+        run: |
+          pip install --require-hashes -r requirements.txt
+          pip install --no-deps -e .
+          pip install pytest pytest-cov
+          pytest -q
+
+      - name: Documentation (docs/en, docs/de) matches and builds
+        run: |
+          pip install -r template/tests/docs/requirements.txt
+          python template/tests/check_docs.py "$INSTANCE" --prefix ifdd-ct-
+
+      - name: The plugin reference (ifdd-ct --markdown) builds with Sphinx
+        # Without tests/docs/conf.py: its suppressed ref warnings would hide
+        # broken links between the table and the plugin sections.
+        working-directory: ${{ env.INSTANCE }}
+        run: |
+          out="$RUNNER_TEMP/plugin-reference"
+          mkdir -p "$out"
+          IFDD_CT_PRIVATE_DIR=./private IFDD_CT_PLUGIN_PATH=./plugins ifdd-ct --markdown > "$out/index.md"
+          python -m sphinx -C -D extensions=myst_parser -W -q -b html "$out" "$out/_build"
+
+      - name: Build the image and list plugins
+        working-directory: ${{ env.INSTANCE }}
+        run: |
+          docker build --tag ct:template .
+          docker run --rm ct:template --list
+          docker run --rm ct:template --markdown | grep -qx '(ifdd-ct-plugin-builtin-faker)='
+          docker run --rm -v "$PWD/tests/fixtures:/fixtures:ro" \
+            -e IFDD_CT_CONTEXT_DIR=/fixtures/contexts ct:template \
+            /fixtures/documents/check-typo.jsonld check 2>&1 >/dev/null | grep -q "undefined terms: nmae"
+
+      - name: Compose files are valid
+        working-directory: ${{ env.INSTANCE }}
+        run: |
+          docker compose -f docker-compose-production.yml config --quiet
+          docker compose -f docker-compose-development.yml config --quiet
+
+  integration:
+    # ct against a real backend: PostgreSQL, Keycloak with the realm of the
+    # keycloak template, the backend from be-core and the contents of the
+    # schema template. Plain HTTP on localhost, no proxy, no be image: the
+    # full path through the proxy is checked in a running installation with
+    # the same tests (see tests/integration/conftest.py in the instance).
+    name: Integration against a running backend
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: it
+          POSTGRES_PASSWORD: it
+          POSTGRES_DB: it
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd "pg_isready -U it -d it"
+          --health-interval 5s --health-timeout 5s --health-retries 20
+
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: template
+
+      # be-core and the keycloak and schema templates are private for now:
+      # like be's template-test.yml, this job needs read access to them.
+      - uses: actions/checkout@v7
+        with:
+          repository: ifdd-de/be-core
+          path: be-core
+      - uses: actions/checkout@v7
+        with:
+          repository: ifdd-de/keycloak
+          path: keycloak
+      - uses: actions/checkout@v7
+        with:
+          repository: ifdd-de/schema
+          path: schema
+
+      # 3.13 for the backend, 3.14 (the last one, hence the default) for ct.
+      - uses: actions/setup-python@v7
+        with:
+          python-version: |
+            3.13
+            3.14
+
+      - name: Render keycloak, schema and ct with one configuration
+        run: |
+          pip install cookiecutter
+          for t in keycloak schema template; do
+            cookiecutter --no-input --config-file template/tests/integration/stack.yaml \
+              --output-dir "rendered/$t" "$t"
+          done
+          echo "KC=$(find rendered/keycloak -mindepth 1 -maxdepth 1 -type d)" >> "$GITHUB_ENV"
+          echo "SCH=$(find rendered/schema -mindepth 1 -maxdepth 1 -type d)" >> "$GITHUB_ENV"
+          echo "CT=$(find rendered/template -mindepth 1 -maxdepth 1 -type d)" >> "$GITHUB_ENV"
+
+      - name: Start Keycloak with the realm of the keycloak template
+        # The realm import reads the client secrets from the environment.
+        run: |
+          docker run -d --name keycloak -p 8080:8080 -p 9000:9000 \
+            --env-file "$KC/.env" \
+            -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin \
+            -v "$GITHUB_WORKSPACE/$KC/realm/import:/opt/keycloak/data/import:ro" \
+            quay.io/keycloak/keycloak:26.8.0 start-dev --import-realm --health-enabled=true
+
+      - name: Serve the contents of the schema template
+        run: nohup python -m http.server 8090 --bind 127.0.0.1 --directory "$SCH/examples/json-ld" > schema.log 2>&1 &
+
+      - name: Start the backend
+        env:
+          IFDD_SERVICE_DB_URL: postgresql+psycopg://it:it@localhost:5432/it
+          IFDD_BE_AUTH_ENABLED: "true"
+          IFDD_OIDC_ISSUER: http://localhost:8080/realms/ifdd-it
+          IFDD_OIDC_JWKS_URL: http://localhost:8080/realms/ifdd-it/protocol/openid-connect/certs
+          IFDD_OIDC_JWKS_AUDIENCE: ifdd-it
+          IFDD_SCHEMA_URL: http://localhost:8090/v1
+          IFDD_TYPE_URL: http://localhost:8090/type/v1
+          IFDD_ASPECTS: '{"products": "product", "functions": "function", "locations": "location", "organisations": "organisation"}'
+        run: |
+          python3.13 -m venv be-venv
+          be-venv/bin/pip install --quiet ./be-core
+          be-venv/bin/ifdd-be-create-tables
+          nohup be-venv/bin/uvicorn --factory ifdd.be.core:create_app \
+            --host 127.0.0.1 --port 8881 > be.log 2>&1 &
+
+      - name: Wait for Keycloak, the backend and the schema contents
+        run: |
+          for url in http://localhost:9000/health/ready http://localhost:8881/version \
+                     http://localhost:8090/v1/product.jsonld; do
+            for _ in $(seq 180); do curl -sf -o /dev/null "$url" && break; sleep 1; done
+            curl -sf -o /dev/null "$url" || { echo "not up: $url"; exit 1; }
+          done
+
+      - name: Integration tests
+        working-directory: ${{ env.CT }}
+        run: |
+          set -a; . "$GITHUB_WORKSPACE/$KC/.env"; set +a
+          pip install --require-hashes -r requirements.txt
+          pip install --no-deps -e .
+          pip install pytest pytest-cov
+          export IFDD_IT_BE_URL=http://localhost:8881
+          export IFDD_IT_SCHEMA_URL=http://localhost:8090/v1
+          export IFDD_IT_TOKEN_URL=http://localhost:8080/realms/ifdd-it/protocol/openid-connect/token
+          export IFDD_IT_CLIENT_ID=ifdd-ct
+          export IFDD_IT_CLIENT_SECRET="$IFDD_KEYCLOAK_CT_CLIENT_SECRET"
+          export IFDD_IT_READONLY_CLIENT_ID=ifdd-api-script
+          export IFDD_IT_READONLY_CLIENT_SECRET="$IFDD_KEYCLOAK_API_CLIENT_SECRET"
+          pytest --no-cov -v tests/integration
+
+      - name: Logs
+        if: failure()
+        run: |
+          docker logs keycloak 2>&1 | tail -100
+          cat be.log schema.log

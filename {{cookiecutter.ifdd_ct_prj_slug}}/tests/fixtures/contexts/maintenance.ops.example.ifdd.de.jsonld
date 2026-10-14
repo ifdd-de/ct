@@ -1,0 +1,58 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "maintenance": "https://type.test/v1/maintenance.ops.example.ifdd.de/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "qudt": "http://qudt.org/schema/qudt/",
+    "type": "@type",
+    "schemaVersion": "maintenance:schemaVersion",
+    "objType": "maintenance:objType",
+    "objScope": "maintenance:objScope",
+    "objName": "maintenance:objName",
+    "origin": "maintenance:origin",
+    "publisher": "maintenance:publisher",
+    "c_created": {
+      "@id": "maintenance:c_created",
+      "@type": "xsd:dateTime"
+    },
+    "c_modified": {
+      "@id": "maintenance:c_modified",
+      "@type": "xsd:dateTime"
+    },
+    "c_cacheCreated": {
+      "@id": "maintenance:c_cacheCreated",
+      "@type": "xsd:dateTime"
+    },
+    "c_cacheUpdated": {
+      "@id": "maintenance:c_cacheUpdated",
+      "@type": "xsd:dateTime"
+    },
+    "c_validNotBefore": {
+      "@id": "maintenance:c_validNotBefore",
+      "@type": "xsd:dateTime"
+    },
+    "c_validNotAfter": {
+      "@id": "maintenance:c_validNotAfter",
+      "@type": "xsd:dateTime"
+    },
+    "maintenanceInterval": {
+      "@id": "maintenance:maintenanceInterval",
+      "@type": "xsd:duration"
+    },
+    "lastInspection": {
+      "@id": "maintenance:lastInspection",
+      "@type": "xsd:date"
+    },
+    "nextInspection": {
+      "@id": "maintenance:nextInspection",
+      "@type": "xsd:date"
+    },
+    "condition": "maintenance:condition"
+  },
+  "@id": "https://type.test/v1/maintenance.ops.example.ifdd.de/schema",
+  "@type": "rdfs:Class",
+  "rdfs:label": "maintenance.ops.example.ifdd.de",
+  "rdfs:comment": "Example domain context: maintenance data (simplified)",
+  "schemaVersion": "0.1.0"
+}

@@ -1,0 +1,7 @@
+{
+  "@context": {
+    "name": "https://type.test/v1/strict/name",
+    "size": {"@id": "https://type.test/v1/strict/size", "@type": "http://www.w3.org/2001/XMLSchema#integer"},
+    "hasPart": {"@id": "https://type.test/v1/strict/hasPart", "@type": "@id"}
+  }
+}

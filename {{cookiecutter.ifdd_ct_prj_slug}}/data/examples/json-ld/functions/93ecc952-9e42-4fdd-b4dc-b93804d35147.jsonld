@@ -1,0 +1,19 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/function.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/functions/93ecc952-9e42-4fdd-b4dc-b93804d35147",
+  "type": "TestData/Function",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "description": "more description - Function 3",
+  "objName": "Function 3",
+  "risk_class": "medium",
+  "isPartOf": {
+    "@id": "{{cookiecutter.ifdd_be_url}}/functions/7c5599ae-c5f8-4d11-aef9-7b816d2571ac"
+  },
+  "implementedBy": [
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/products/9323ec8e-a0d6-478e-a12f-6b2a243bf346"
+    }
+  ],
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}

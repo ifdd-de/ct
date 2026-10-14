@@ -1,0 +1,29 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/product.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/products/7f5da14a-d64c-409b-ad88-75b96f763e1e",
+  "type": "TestData/Product",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "description": "more description - Device Cluster",
+  "objName": "Device Cluster",
+  "containedIn": {
+    "@id": "{{cookiecutter.ifdd_be_url}}/locations/743379b2-9dd8-4c80-ae80-b439e803d1ba"
+  },
+  "providesFunction": [
+  ],
+  "hasPart": [
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/products/9175908e-2a93-4723-a620-0defeaecb8e7"
+    },
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/products/92a18d8e-563b-4c76-84eb-49f1b7c05014"
+    },
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/products/9323ec8e-a0d6-478e-a12f-6b2a243bf346"
+    },
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/products/99cecc40-cfa9-41d5-8f32-b6c24d46751d"
+    }
+  ],
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}

@@ -1,0 +1,39 @@
+# Run a pipeline with the released image:
+#   docker compose -f docker-compose-production.yml run --rm ct --list
+#   ./adm_02_run.sh -f pipelines/load-examples.yaml
+#
+# ct is a job container, not a service: it starts, runs the steps and exits.
+
+services:
+  ct:
+    image: {{ cookiecutter.ifdd_registry_url }}/{{ cookiecutter.ifdd_ct_prj_slug }}:{{ cookiecutter.ifdd_ct_version }}
+    user: "${IFDD_CT_UID:-1000}:${IFDD_CT_GID:-1000}"
+    environment:
+      IFDD_CT_LOG_LEVEL: ${IFDD_CT_LOG_LEVEL:-WARNING}
+      IFDD_CT_BE_URL: ${IFDD_CT_BE_URL:?set IFDD_CT_BE_URL in .env}
+      IFDD_CT_SCHEMA_URL: ${IFDD_CT_SCHEMA_URL:-}
+      IFDD_CT_TYPE_URL: ${IFDD_CT_TYPE_URL:-}
+      IFDD_CT_UNIT_URL: ${IFDD_CT_UNIT_URL:-}
+      IFDD_CT_ASPECTS: ${IFDD_CT_ASPECTS:-}
+      IFDD_CT_OIDC_TOKEN_URL: ${IFDD_CT_OIDC_TOKEN_URL:-}
+      IFDD_CT_OIDC_CLIENT_ID: ${IFDD_CT_OIDC_CLIENT_ID:-}
+      IFDD_CT_OIDC_CLIENT_SECRET: ${IFDD_CT_OIDC_CLIENT_SECRET:-}
+      IFDD_CT_CA_BUNDLE: ${IFDD_CT_CA_BUNDLE:-}
+      IFDD_CT_HTTP_TIMEOUT: ${IFDD_CT_HTTP_TIMEOUT:-30}
+      IFDD_CT_CONTEXT_DIR: ${IFDD_CT_CONTEXT_DIR:-}
+    volumes:
+      - ./data:/data
+      - ./plugins:/plugins:ro
+      - ./certs:/certs:ro
+    networks:
+      - proxy
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  proxy:
+    name: {{ cookiecutter.ifdd_proxy_network }}
+    external: true

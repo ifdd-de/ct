@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+build/
+dist/
+data/out/
+certs/*
+!certs/README.md
+envs/*
+
+# Local builds of the documentation (docs/en, docs/de)
+docs/_build/

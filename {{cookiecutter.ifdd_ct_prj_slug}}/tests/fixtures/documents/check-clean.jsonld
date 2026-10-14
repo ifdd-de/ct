@@ -1,0 +1,14 @@
+[
+  {
+    "@context": "https://schema.test/v1/strict.jsonld",
+    "@id": "https://rest.test/products/clean-1",
+    "name": "Transformer 1",
+    "size": 3,
+    "hasPart": "https://rest.test/products/clean-2"
+  },
+  {
+    "@context": "https://schema.test/v1/strict.jsonld",
+    "@id": "https://rest.test/products/clean-2",
+    "name": "Bushing"
+  }
+]

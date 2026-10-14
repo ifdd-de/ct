@@ -1,0 +1,6 @@
+# Documentation example: a second faker profile, written to a file.
+#   ifdd-ct -f pipelines/datacenter-example.yaml
+# The data centre profile is not meant for ifdd-be (no schemas, inline @context).
+steps:
+  - faker: {profile: datacenter, seed: 7}
+  - out/datacenter.json

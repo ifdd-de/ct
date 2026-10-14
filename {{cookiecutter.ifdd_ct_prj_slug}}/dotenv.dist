@@ -1,0 +1,42 @@
+# Template -> copy to .env (the post-generation hook did that once):  cp dotenv.dist .env
+# docker compose reads .env for the ${...} values in the compose files.
+
+# Log level if neither -v nor -q is given: DEBUG, INFO, WARNING, ERROR
+IFDD_CT_LOG_LEVEL={{ cookiecutter.ifdd_ct_log_level|upper }}
+
+# Services
+IFDD_CT_BE_URL={{ cookiecutter.ifdd_be_url }}
+IFDD_CT_SCHEMA_URL={{ cookiecutter.ifdd_schema_url }}
+IFDD_CT_TYPE_URL={{ cookiecutter.ifdd_type_url }}
+IFDD_CT_UNIT_URL={{ cookiecutter.ifdd_unit_url }}
+
+# REST path segment -> aspect of ifdd-be, used to tell the aspect of an @id.
+# Single quotes keep the JSON intact when a shell sources this file
+# (set -a; . ./.env); docker compose reads the same value.
+IFDD_CT_ASPECTS='{{ cookiecutter.ifdd_be_aspects }}'
+
+# OIDC client credentials of the Keycloak client for ct (client credentials
+# grant). The client and its secret are defined by the keycloak instance:
+# copy IFDD_KEYCLOAK_CT_CLIENT_SECRET from its .env here.
+# Leave IFDD_CT_OIDC_CLIENT_ID empty if the backend runs without auth.
+IFDD_CT_OIDC_TOKEN_URL={{ cookiecutter.ifdd_oidc_token_url }}
+IFDD_CT_OIDC_CLIENT_ID={{ cookiecutter.ifdd_keycloak_ct_client_id }}
+IFDD_CT_OIDC_CLIENT_SECRET=
+
+# PEM file with the CA of internal certificates, as seen in the container
+# (./certs is mounted as /certs): copy certs/ca.crt of the proxy instance
+# (adm_01_certs.sh there) into ./certs. Only this file is trusted then.
+# Empty: system trust store, e.g. for publicly trusted certificates.
+IFDD_CT_CA_BUNDLE=/certs/ca.crt
+
+# Seconds per HTTP request
+IFDD_CT_HTTP_TIMEOUT=30
+
+# Optional: directory with JSON-LD contexts to use instead of fetching them
+# (file name = last part of the context URL, e.g. product.jsonld)
+IFDD_CT_CONTEXT_DIR=
+
+# User and group the container runs as, so files written to ./data belong
+# to you. Find yours with: id -u; id -g
+IFDD_CT_UID=1000
+IFDD_CT_GID=1000

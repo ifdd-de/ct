@@ -1,0 +1,10 @@
+default_context:
+    ifdd_ct_prj_name: "Core Tools"
+    ifdd_ct_log_level: DEBUG
+    ifdd_be_url: "http://rest.test:8881"
+    ifdd_be_aspects: "{\"products\": \"product\", \"racks\": \"rack\"}"
+    ifdd_schema_url: "http://schema.test/v1"
+    ifdd_type_url: "http://type.test/v1"
+    ifdd_unit_url: "http://unit.test/v1"
+    ifdd_proxy_network: "test-net"
+    ifdd_registry_url: "registry.example/ifdd"

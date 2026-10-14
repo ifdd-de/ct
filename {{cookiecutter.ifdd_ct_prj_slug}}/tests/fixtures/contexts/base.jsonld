@@ -1,0 +1,7 @@
+{
+  "@context": {
+    "@vocab": "https://type.test/v1/base/",
+    "hasPart": {"@type": "@id"},
+    "isPartOf": {"@type": "@id"}
+  }
+}

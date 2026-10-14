@@ -1,0 +1,55 @@
+name: Template update
+
+# Generates an instance from the latest tag, applies the current template with
+# `cruft update` and fails if any change cannot be applied cleanly.
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          path: template
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+
+      - name: Install cruft
+        run: pip install cruft
+
+      - name: Find the latest tag
+        id: tag
+        working-directory: template
+        run: echo "tag=$(git describe --tags --abbrev=0 2>/dev/null || true)" >> "$GITHUB_OUTPUT"
+
+      - name: Generate from the latest tag
+        if: steps.tag.outputs.tag != ''
+        run: |
+          git config --global user.email "ci@ifdd.de"
+          git config --global user.name "ci"
+          cruft create --no-input --checkout "${{ steps.tag.outputs.tag }}" \
+            --output-dir old "file://$GITHUB_WORKSPACE/template"
+          cd old/*/ && git init -q && git add -A && git commit -qm "instance at ${{ steps.tag.outputs.tag }}"
+
+      - name: Apply the current template
+        if: steps.tag.outputs.tag != ''
+        run: |
+          cd old/*/
+          cruft update --skip-apply-ask --checkout "${{ github.sha }}"
+          if find . -name "*.rej" | grep -q .; then
+            find . -name "*.rej" -exec cat {} \;
+            exit 1
+          fi
+
+      - name: No tag yet
+        if: steps.tag.outputs.tag == ''
+        run: echo "no tag in the template repository yet - nothing to update from"

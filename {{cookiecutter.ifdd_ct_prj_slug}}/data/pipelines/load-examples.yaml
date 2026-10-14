@@ -1,0 +1,5 @@
+# Load the example documents into the backend.
+#   ifdd-ct -f pipelines/load-examples.yaml
+steps:
+  - examples/json-ld
+  - put

@@ -1,0 +1,10 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/base.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/functions/7c5599ae-c5f8-4d11-aef9-7b816d2571ac",
+  "aspect": "function",
+  "type": "TestData/Function",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "objName": "Function Group",
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}

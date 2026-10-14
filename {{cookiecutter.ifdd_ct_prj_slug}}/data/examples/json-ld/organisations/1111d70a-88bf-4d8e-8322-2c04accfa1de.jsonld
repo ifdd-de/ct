@@ -1,0 +1,18 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/organisation.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/organisations/1111d70a-88bf-4d8e-8322-2c04accfa1de",
+  "type": "TestData/Organisation",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "description": "more description - Organisation 1.1",
+  "objName": "Org 1.1",
+  "hasPart": [],
+  "isPartOf": "{{cookiecutter.ifdd_be_url}}/organisations/10364eea-a951-42c2-9423-22240863a25a",
+  "roleDeliversTo": [],
+  "roleClientOf": [
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/organisations/02d4a272-a910-4406-a839-38400593642b"
+    }
+  ],
+  "c_created": "2012-04-23T11:11:11.511Z",
+  "c_modified": "2012-04-23T11:11:11.511Z"
+}

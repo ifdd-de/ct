@@ -1,0 +1,15 @@
+{
+  "@context": "{{cookiecutter.ifdd_schema_url}}/base.jsonld",
+  "@id": "{{cookiecutter.ifdd_be_url}}/organisations/20ed77b9-c750-4be3-af30-30455f99cca8",
+  "aspect": "organisation",
+  "type": "TestData/Organisation",
+  "objScope": "static-config;ifdd_ct_testdata",
+  "objName": "Org 2",
+  "hasPart": [
+    {
+      "@id": "{{cookiecutter.ifdd_be_url}}/organisations/21bfd11a-2fd7-4b5c-8913-61baf54ea26e"
+    }
+  ],
+  "c_created": "2012-04-23T20:20:20.511Z",
+  "c_modified": "2012-04-23T20:20:20.511Z"
+}
