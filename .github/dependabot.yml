@@ -1,0 +1,21 @@
+# Dependabot version updates for ct.
+# Security updates are a repository setting and do not depend on this file.
+#
+# Not covered on purpose:
+# - image versions in cookiecutter.json (rendered into the compose files);
+# - tests/docs/requirements.txt (pinned together for the docs check);
+# - workflows of the rendered instance ({{cookiecutter.ifdd_ct_prj_slug}}/.github/workflows):
+#   not yet verified that Dependabot scans them there.
+# - {{cookiecutter.ifdd_ct_prj_slug}}/requirements.txt: compiled with uv (hashes, fixed platform);
+#   regenerate it by hand together with {{cookiecutter.ifdd_ct_prj_slug}}/pyproject.toml.
+# - {{cookiecutter.ifdd_ct_prj_slug}}/Dockerfile: the base image is an ARG default.
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions:
+        patterns: ["*"]
