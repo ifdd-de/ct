@@ -8,6 +8,7 @@
   "ifdd_schema_url": "https://schema/v1",
   "ifdd_type_url": "https://type/v1",
   "ifdd_unit_url": "https://unit/v1",
+  "ifdd_ts_api_url": "https://ts/tsapi",
   "ifdd_oidc_token_url": "https://id.example/realms/ifdd/protocol/openid-connect/token",
   "ifdd_keycloak_ct_client_id": "ifdd-ct",
   "ifdd_proxy_network": "proxy-net",

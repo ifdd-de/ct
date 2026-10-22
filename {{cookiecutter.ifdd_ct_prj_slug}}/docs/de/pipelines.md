@@ -124,6 +124,36 @@ gegen seinen `@context` vom Schema-Dienst (`check` mit `fail: true`: Nichts
 wird geschrieben, wenn dort ein Term undefiniert ist) und lädt die Dokumente
 mit `put`. Dieselben Daten noch einmal zu laden ändert nichts.
 
+### Beispiel-Zeitreihen laden
+
+```bash
+./adm_02_run.sh -f pipelines/generate-time-series.yaml
+```
+
+Die Pipeline erzeugt dasselbe Energienetz (gleicher Seed, also dieselben
+`@id`s), dann ersetzt `ts-climate` die Dokumente durch Samples: Jeder
+Leistungsschalter (ein Objekt mit einem Dokument in
+`breaker.grid.example.ifdd.de`) bekommt eine Temperaturreihe im Store
+`temperature.ops.example.ifdd.de` und eine Reihe der relativen Feuchte in
+`humidity.ops.example.ifdd.de`, ein Sample alle 15 Minuten über 7 Tage, bis
+zum letzten vollen Schritt vor jetzt. Die Eigenschaften stammen aus dem
+Beispiel-Vokabular `climate.ops.example.ifdd.de` des type-Dienstes
+(`{{ cookiecutter.ifdd_type_url }}`), die Einheiten `DEG_C` und `PERCENT_RH`
+aus dem unit-Dienst.
+
+`ts-post` schreibt sie an ts-api (`{{ cookiecutter.ifdd_ts_api_url }}`), je
+Store in Listen von 5000 Samples (`ts-post: {batch: N}`), mit dem Token von
+`{{ cookiecutter.ifdd_keycloak_ct_client_id }}`; dieser Client braucht die
+Schreibrolle von ts-api und ein Store-Muster (das keycloak-Template gibt ihm
+die Wurzel). ts-api prüft jedes Sample gegen das Vokabular und weist die
+ganze Liste ab, wenn eines nicht passt. Ein erneuter Lauf schreibt neue
+Samples für die neueren Zeiten; Samples mit gleicher Zeit behalten den
+größeren Wert. Das Objekt-Dashboard von Grafana wählt Reihen nach `ifdd_id`
+aus, gleich in welchem Store.
+
+`ts-climate` nimmt `context`, `days`, `step`, `end` (ISO 8601 mit Offset),
+`seed` und die beiden Store-Namen als Parameter (`--describe ts-climate`).
+
 ## Plugins schreiben
 
 Ein Plugin ist eine Funktion, die die Datensätze und einen Kontext bekommt

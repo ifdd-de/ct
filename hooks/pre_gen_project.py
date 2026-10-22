@@ -38,6 +38,7 @@ for url_var, value in {
     "ifdd_schema_url": "{{ cookiecutter.ifdd_schema_url }}",
     "ifdd_type_url": "{{ cookiecutter.ifdd_type_url }}",
     "ifdd_unit_url": "{{ cookiecutter.ifdd_unit_url }}",
+    "ifdd_ts_api_url": "{{ cookiecutter.ifdd_ts_api_url }}",
 }.items():
     if not re.match(r"https?://", value):
         errors.append(f"{url_var} '{value}' must start with http:// or https://.")

@@ -1,0 +1,22 @@
+# Example time series for the circuit breakers of generate-energy-grid.yaml,
+# written through ts-api (IFDD_CT_TS_API_URL):
+#   ./adm_02_run.sh -f pipelines/generate-time-series.yaml
+# Try it without ts-api first: replace 'ts-post' by 'ts-post: {dry_run: true}'.
+#
+# The faker step is the same as in generate-energy-grid.yaml (same seed, same
+# @ids); ts-climate keeps no document, only samples of the breakers:
+# temperature and relative humidity, every 15 minutes over 7 days, in two
+# stores. ts-api checks them against the vocabulary climate.ops.example.ifdd.de
+# of the type service.
+steps:
+  - faker:
+      profile: energy-grid
+      seed: 42
+      product: 20
+      function: 8
+      location: 5
+      organisation: 4
+  - ts-climate:
+      days: 7
+      step: 900
+  - ts-post

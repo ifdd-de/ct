@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased]
+
+- New plugins `ts-climate` (example samples of temperature and relative
+  humidity for the circuit breakers of the faker profile `energy-grid`) and
+  `ts-post` (writes sample records to ts-api, per store in lists), module
+  `ifdd.ct.plugins.timeseries`; pipeline `data/pipelines/generate-time-series.yaml`.
+- New shared variable `ifdd_ts_api_url` (`IFDD_CT_TS_API_URL`), checked by the
+  pre-generation hook. `.env` and `data/` are on the skip list: existing
+  instances add `IFDD_CT_TS_API_URL` to `.env` and copy the pipeline by hand.
+- `IFDD_CT_TYPE_URL` is used now (base of the property IRIs of `ts-climate`).
+
 ## [26.10.2] - 2026-10-14
 
 - `ifdd-ct --markdown`, parameter help texts with `Annotated`, `.env`

@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+- Plugins `ts-climate` and `ts-post`, pipeline `generate-time-series.yaml`,
+  setting `IFDD_CT_TS_API_URL` (see the template CHANGELOG). Documentation:
+  `pipelines` (loading example time series), `reference`.
+
 ## [26.10.2] - 2026-10-14
 
 Tests and coverage:

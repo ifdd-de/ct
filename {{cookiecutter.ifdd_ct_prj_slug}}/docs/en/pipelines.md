@@ -117,6 +117,34 @@ document against its `@context` from the schema service (`check` with
 `fail: true`: nothing is written if a term is undefined there) and loads the
 documents with `put`. Loading the same data again changes nothing.
 
+### Loading example time series
+
+```bash
+./adm_02_run.sh -f pipelines/generate-time-series.yaml
+```
+
+The pipeline generates the same energy grid (same seed, so the same `@id`s),
+then `ts-climate` replaces the documents by samples: every circuit breaker
+(an object with a document in `breaker.grid.example.ifdd.de`) gets a
+temperature series in the store `temperature.ops.example.ifdd.de` and a
+relative humidity series in `humidity.ops.example.ifdd.de`, one sample every
+15 minutes over 7 days, up to the last full step before now. The properties
+are those of the example vocabulary `climate.ops.example.ifdd.de` in the type
+service (`{{ cookiecutter.ifdd_type_url }}`), the units `DEG_C` and
+`PERCENT_RH` of the unit service.
+
+`ts-post` writes them to ts-api (`{{ cookiecutter.ifdd_ts_api_url }}`), per
+store in lists of 5000 samples (`ts-post: {batch: N}`), with the token of
+`{{ cookiecutter.ifdd_keycloak_ct_client_id }}`; that client needs the write
+role of ts-api and a store pattern (the keycloak template gives it the root).
+ts-api checks every sample against the vocabulary and refuses the whole list
+if one does not fit. Running the pipeline again writes new samples for the
+newer times; samples with the same time keep the larger value. Grafana's
+object dashboard selects series by `ifdd_id`, whatever their store.
+
+`ts-climate` takes `context`, `days`, `step`, `end` (ISO 8601 with offset),
+`seed` and the two store names as parameters (`--describe ts-climate`).
+
 ## Writing plugins
 
 A plugin is a function that gets the records and a context and returns the

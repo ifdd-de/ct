@@ -88,7 +88,8 @@ aus einer Shell baut mit Sphinx 9.1.0 und myst-parser 5.1.0 ohne Warnung.
 | `IFDD_CT_BE_URL` | `{{ cookiecutter.ifdd_be_url }}` | Backend, Faker | Basis-URL des Backends; auch die Basis erzeugter `@id`s; Pflicht |
 | `IFDD_CT_SCHEMA_URL` | `{{ cookiecutter.ifdd_schema_url }}` | Faker `energy-grid` | Basis der Kontext-URLs |
 | `IFDD_CT_UNIT_URL` | `{{ cookiecutter.ifdd_unit_url }}` | Faker `energy-grid` | Basis der Einheiten-IRIs in Größenwerten |
-| `IFDD_CT_TYPE_URL` | `{{ cookiecutter.ifdd_type_url }}` | geplante Plugins | Dienst type |
+| `IFDD_CT_TYPE_URL` | `{{ cookiecutter.ifdd_type_url }}` | `ts-climate` | Basis der Eigenschafts-IRIs der Beispiel-Samples |
+| `IFDD_CT_TS_API_URL` | `{{ cookiecutter.ifdd_ts_api_url }}` | `ts-post` | Zeitreihen-API (ts-api) |
 | `IFDD_CT_ASPECTS` | `{{ cookiecutter.ifdd_be_aspects }}` | Backend | JSON: Pfadsegment -> Aspekt |
 | `IFDD_CT_OIDC_TOKEN_URL` | `{{ cookiecutter.ifdd_oidc_token_url }}` | Backend | Token-Endpunkt |
 | `IFDD_CT_OIDC_CLIENT_ID` | `{{ cookiecutter.ifdd_keycloak_ct_client_id }}` | Backend | Client; leer für ein Backend ohne Authentifizierung |
