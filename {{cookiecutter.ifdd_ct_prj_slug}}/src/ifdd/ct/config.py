@@ -30,6 +30,7 @@ class Settings:
     schema_url: str = field(default_factory=lambda: _url("IFDD_CT_SCHEMA_URL"))
     type_url: str = field(default_factory=lambda: _url("IFDD_CT_TYPE_URL"))
     unit_url: str = field(default_factory=lambda: _url("IFDD_CT_UNIT_URL"))
+    ts_api_url: str = field(default_factory=lambda: _url("IFDD_CT_TS_API_URL"))
     aspects_raw: str = field(default_factory=lambda: _env("IFDD_CT_ASPECTS"))
     oidc_token_url: str = field(default_factory=lambda: _env("IFDD_CT_OIDC_TOKEN_URL"))
     oidc_client_id: str = field(default_factory=lambda: _env("IFDD_CT_OIDC_CLIENT_ID"))

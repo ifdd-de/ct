@@ -28,6 +28,7 @@ cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.10.1 
 | `ifdd_schema_url` | `https://schema/v1` | `IFDD_CT_SCHEMA_URL`, contexts of example data |
 | `ifdd_type_url` | `https://type/v1` | `IFDD_CT_TYPE_URL` |
 | `ifdd_unit_url` | `https://unit/v1` | `IFDD_CT_UNIT_URL` |
+| `ifdd_ts_api_url` | `https://ts/tsapi` | `IFDD_CT_TS_API_URL` (plugin `ts-post`) |
 | `ifdd_oidc_token_url` | placeholder | `IFDD_CT_OIDC_TOKEN_URL` |
 | `ifdd_keycloak_ct_client_id` | `ifdd-ct` | `IFDD_CT_OIDC_CLIENT_ID`; the same variable names the client in the keycloak template |
 | `ifdd_proxy_network` | `proxy-net` | external Docker network |

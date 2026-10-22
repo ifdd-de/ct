@@ -6,5 +6,6 @@ default_context:
     ifdd_schema_url: "http://schema.test/v1"
     ifdd_type_url: "http://type.test/v1"
     ifdd_unit_url: "http://unit.test/v1"
+    ifdd_ts_api_url: "http://ts.test/tsapi"
     ifdd_proxy_network: "test-net"
     ifdd_registry_url: "registry.example/ifdd"

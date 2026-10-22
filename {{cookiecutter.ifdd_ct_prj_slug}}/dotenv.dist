@@ -9,6 +9,8 @@ IFDD_CT_BE_URL={{ cookiecutter.ifdd_be_url }}
 IFDD_CT_SCHEMA_URL={{ cookiecutter.ifdd_schema_url }}
 IFDD_CT_TYPE_URL={{ cookiecutter.ifdd_type_url }}
 IFDD_CT_UNIT_URL={{ cookiecutter.ifdd_unit_url }}
+# Time series API (ts-api), used by the plugin ts-post
+IFDD_CT_TS_API_URL={{ cookiecutter.ifdd_ts_api_url }}
 
 # REST path segment -> aspect of ifdd-be, used to tell the aspect of an @id.
 # Single quotes keep the JSON intact when a shell sources this file

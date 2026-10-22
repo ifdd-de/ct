@@ -87,7 +87,8 @@ warning.
 | `IFDD_CT_BE_URL` | `{{ cookiecutter.ifdd_be_url }}` | backend, faker | backend base URL; also the base of generated `@id`s; required |
 | `IFDD_CT_SCHEMA_URL` | `{{ cookiecutter.ifdd_schema_url }}` | faker `energy-grid` | base of the context URLs |
 | `IFDD_CT_UNIT_URL` | `{{ cookiecutter.ifdd_unit_url }}` | faker `energy-grid` | base of the unit IRIs in quantity values |
-| `IFDD_CT_TYPE_URL` | `{{ cookiecutter.ifdd_type_url }}` | planned plugins | type service |
+| `IFDD_CT_TYPE_URL` | `{{ cookiecutter.ifdd_type_url }}` | `ts-climate` | base of the property IRIs of the example samples |
+| `IFDD_CT_TS_API_URL` | `{{ cookiecutter.ifdd_ts_api_url }}` | `ts-post` | time series API (ts-api) |
 | `IFDD_CT_ASPECTS` | `{{ cookiecutter.ifdd_be_aspects }}` | backend | JSON: path segment -> aspect |
 | `IFDD_CT_OIDC_TOKEN_URL` | `{{ cookiecutter.ifdd_oidc_token_url }}` | backend | token endpoint |
 | `IFDD_CT_OIDC_CLIENT_ID` | `{{ cookiecutter.ifdd_keycloak_ct_client_id }}` | backend | client; empty for a backend without authentication |
