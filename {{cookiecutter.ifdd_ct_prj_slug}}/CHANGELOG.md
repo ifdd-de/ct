@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [26.10.3] - 2026-10-30
+
+- Dependencies of the image updated (`requirements.txt`, `pyproject.toml`; see
+  the template CHANGELOG).
 
 - Plugins `ts-climate` and `ts-post`, pipeline `generate-time-series.yaml`,
   setting `IFDD_CT_TS_API_URL` (see the template CHANGELOG). Documentation:

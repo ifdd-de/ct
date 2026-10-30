@@ -1,6 +1,16 @@
 # Changelog
 
-## [Unreleased]
+## [26.10.3] - 2026-10-30
+
+- `ifdd_ct_version` 26.10.3.
+- Lower bounds in `pyproject.toml` raised to the current releases (e.g. Faker
+  40.44, requests 2.34.2, PyYAML 6.0.3, SQLAlchemy 2.1.6, Pint 0.26.2,
+  networkx 3.7; development: pytest 9.2, pytest-cov 7.1); `requirements.txt`
+  of the image compiled again with `uv pip compile --upgrade` (Faker 40.44.0,
+  SQLAlchemy 2.1.6, Pint 0.26.2, cachetools 7.2.7, certifi 2026.10.23 and
+  others).
+- CI: Keycloak 26.8.1 for the integration tests (was 26.8.0).
+- Documentation check: Sphinx 9.2.0 (`tests/docs/requirements.txt`).
 
 - New plugins `ts-climate` (example samples of temperature and relative
   humidity for the circuit breakers of the faker profile `energy-grid`) and

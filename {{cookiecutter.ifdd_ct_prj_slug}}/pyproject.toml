@@ -11,28 +11,28 @@ requires-python = ">=3.13"
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
 dependencies = [
-    "Faker>=40",
-    "PyLD>=3.3,<4",
-    "PyYAML>=6.0",
-    "requests>=2.32",
+    "Faker>=40.44",
+    "PyLD>=3.3.0,<4",
+    "PyYAML>=6.0.3",
+    "requests>=2.34.2",
 ]
 
 [project.optional-dependencies]
 # Libraries for planned plugins (VMware, database, graph, units, RDF).
 # The container image installs them all; see requirements.txt.
 plugins = [
-    "Jinja2>=3.1",
-    "networkx>=3.5",
-    "Pint>=0.25",
-    "psycopg2-binary>=2.9.11",
-    "pyvmomi>=9.0",
-    "rdflib>=7.1",
-    "SQLAlchemy>=2.0",
+    "Jinja2>=3.1.6",
+    "networkx>=3.7",
+    "Pint>=0.26.2",
+    "psycopg2-binary>=2.9.13",
+    "pyvmomi>=9.1.1",
+    "rdflib>=7.6.0",
+    "SQLAlchemy>=2.1.6",
     "ttl-cache>=1.6",
 ]
 dev = [
-    "pytest>=8.4",
-    "pytest-cov>=6.0",
+    "pytest>=9.2",
+    "pytest-cov>=7.1",
 ]
 
 [project.scripts]

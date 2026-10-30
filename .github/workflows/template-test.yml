@@ -173,7 +173,7 @@ jobs:
             --env-file "$KC/.env" \
             -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin \
             -v "$GITHUB_WORKSPACE/$KC/realm/import:/opt/keycloak/data/import:ro" \
-            quay.io/keycloak/keycloak:26.8.0 start-dev --import-realm --health-enabled=true
+            quay.io/keycloak/keycloak:26.8.1 start-dev --import-realm --health-enabled=true
 
       - name: Serve the contents of the schema template
         run: nohup python -m http.server 8090 --bind 127.0.0.1 --directory "$SCH/examples/json-ld" > schema.log 2>&1 &
