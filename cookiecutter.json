@@ -1,7 +1,7 @@
 {
   "ifdd_ct_prj_name": "CT",
   "ifdd_ct_prj_slug": "{{ cookiecutter.ifdd_ct_prj_name|lower|replace(' ', '-') }}",
-  "ifdd_ct_version": "26.10.2",
+  "ifdd_ct_version": "26.10.3",
   "ifdd_ct_log_level": "WARNING",
   "ifdd_be_url": "https://rest",
   "ifdd_be_aspects": "{\"products\": \"product\", \"functions\": \"function\", \"locations\": \"location\", \"organisations\": \"organisation\"}",
