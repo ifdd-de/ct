@@ -35,15 +35,25 @@ list:
 
 ## Architecture
 
-```{mermaid}
-flowchart LR
-  Op[operator] -->|adm_02_run.sh| CT[ct: job container]
-  CT -->|reads, writes| Data[(data/)]
-  CT -->|loads| Plugins[plugins/]
-  CT -->|client credentials| Proxy[proxy: Traefik]
-  Proxy --> KC[Keycloak]
-  Proxy --> BE[be]
-  Proxy --> Schema[schema]
+```{uml}
+@startuml
+left to right direction
+  rectangle "operator" as Op
+  rectangle "ct: job container" as CT
+  Op --> CT : adm_02_run.sh
+  database "data/" as Data
+  CT --> Data : reads, writes
+  rectangle "plugins/" as Plugins
+  CT --> Plugins : loads
+  rectangle "proxy: Traefik" as Proxy
+  CT --> Proxy : client credentials
+  rectangle "Keycloak" as KC
+  Proxy --> KC
+  rectangle "be" as BE
+  Proxy --> BE
+  rectangle "schema" as Schema
+  Proxy --> Schema
+@enduml
 ```
 
 ct calls every service under its public URL through the proxy, from inside

@@ -82,6 +82,5 @@ unabhängig.
 
 ```{note}
 Hier nicht getestet: der Image-Build und der Release-Workflow. Die
-Template-CI baut das Image; die Honesty notes im README führen auf, was
-gelaufen ist.
+Template-CI baut das Image.
 ```

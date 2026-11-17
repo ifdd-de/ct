@@ -35,15 +35,25 @@ cruft-Skip-Liste:
 
 ## Architektur
 
-```{mermaid}
-flowchart LR
-  Op[Betreiber] -->|adm_02_run.sh| CT[ct: Job-Container]
-  CT -->|liest, schreibt| Data[(data/)]
-  CT -->|lädt| Plugins[plugins/]
-  CT -->|Client Credentials| Proxy[proxy: Traefik]
-  Proxy --> KC[Keycloak]
-  Proxy --> BE[be]
-  Proxy --> Schema[schema]
+```{uml}
+@startuml
+left to right direction
+  rectangle "Betreiber" as Op
+  rectangle "ct: Job-Container" as CT
+  Op --> CT : adm_02_run.sh
+  database "data/" as Data
+  CT --> Data : liest, schreibt
+  rectangle "plugins/" as Plugins
+  CT --> Plugins : lädt
+  rectangle "proxy: Traefik" as Proxy
+  CT --> Proxy : Client Credentials
+  rectangle "Keycloak" as KC
+  Proxy --> KC
+  rectangle "be" as BE
+  Proxy --> BE
+  rectangle "schema" as Schema
+  Proxy --> Schema
+@enduml
 ```
 
 ct ruft jeden Dienst unter seiner öffentlichen URL über den Proxy auf, aus

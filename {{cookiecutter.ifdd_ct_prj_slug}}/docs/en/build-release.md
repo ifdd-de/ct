@@ -79,5 +79,5 @@ it.
 
 ```{note}
 Not tested here: the image build and the release workflow. The template CI
-builds the image; the honesty notes in the README list what was run.
+builds the image.
 ```

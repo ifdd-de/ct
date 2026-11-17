@@ -1,5 +1,10 @@
 # Changelog
 
+## [26.11.1] - 2026-11-14
+
+- Documentation: architecture diagram in PlantUML; README without test
+  reports (see the template CHANGELOG).
+
 ## [26.10.3] - 2026-10-30
 
 - Dependencies of the image updated (`requirements.txt`, `pyproject.toml`; see
@@ -62,8 +67,7 @@ Documentation:
 
 - `docs/en` and `docs/de` (Sphinx sources, MyST Markdown): index, setup,
   build and release, operations, security, troubleshooting, reference,
-  pipelines. The README is now an entry point with a quick start, the links,
-  the honesty notes and the license; its former sections moved into the
+  pipelines. The README is now an entry point with a quick start, the links and the license; its former sections moved into the
   documentation.
 - `docs` in `.dockerignore`, `docs/_build/` in `.gitignore`.
 

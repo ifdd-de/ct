@@ -10,9 +10,9 @@ documentation; this file covers the template.
 ## Create an instance
 
 ```bash
-cruft create --checkout v26.10.1 https://github.com/ifdd-de/ct
+cruft create --checkout v26.11.1 https://github.com/ifdd-de/ct
 # or with the organisation's meta file
-cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.10.1 https://github.com/ifdd-de/ct
+cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.11.1 https://github.com/ifdd-de/ct
 ```
 
 ## Variables
@@ -21,7 +21,7 @@ cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.10.1 
 |---|---|---|
 | `ifdd_ct_prj_name` | `CT` | display name |
 | `ifdd_ct_prj_slug` | from the name | directory, image name |
-| `ifdd_ct_version` | `26.10.1` | package version, image tag |
+| `ifdd_ct_version` | `26.11.1` | package version, image tag |
 | `ifdd_ct_log_level` | `WARNING` | `IFDD_CT_LOG_LEVEL` |
 | `ifdd_be_url` | `https://rest` | `IFDD_CT_BE_URL`, `@id`s of example and generated data |
 | `ifdd_be_aspects` | products/functions/locations/organisations | `IFDD_CT_ASPECTS` |
@@ -36,7 +36,7 @@ cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.10.1 
 
 All of them except `ifdd_ct_version` already exist in the organisation's
 `cookiecutter_all.yaml` under these names (shared with be, schema, type,
-unit and proxy). Add `ifdd_ct_version: 26.10.1` there if the version should
+unit and proxy). Add `ifdd_ct_version: 26.11.1` there if the version should
 come from the meta file as well.
 
 The client secret is deliberately not a template variable: copy
@@ -66,7 +66,8 @@ only an entry point that links to them; `docs` is in `.dockerignore`.
 
 The pages have no `conf.py` of their own: they are meant to be copied into a
 Sphinx project that documents all services. That project needs `myst_parser`
-and `sphinxcontrib.mermaid`. Labels start with `ifdd-ct-`; references to
+and `sphinxcontrib.plantuml` (PlantUML with Java and Graphviz).
+Labels start with `ifdd-ct-`; references to
 `ifdd-instances-ct` (the instance chapter of the meta repository) resolve
 only there.
 
@@ -83,6 +84,14 @@ headings per level in both languages, every label with the prefix, every
 reference to an own label resolvable, and a Sphinx build of each language
 with `-W` (configuration `tests/docs/conf.py`, versions
 `tests/docs/requirements.txt`).
+
+The check runs PlantUML, so it needs Java and Graphviz.
+`tests/docs/get_plantuml.sh` downloads the pinned PlantUML jar into the user
+cache, checks its SHA-256 and prints its path:
+
+```bash
+export IFDD_PLANTUML_JAR="$(tests/docs/get_plantuml.sh)"
+```
 
 ## Checks
 
@@ -103,36 +112,11 @@ with `-W` (configuration `tests/docs/conf.py`, versions
 * Generated instances inherit `ci.yml` (tests, image, compose, cruft drift)
   and `release.yml` (image to ghcr.io on a `v*` tag).
 
-## Honesty notes
+## AI assistance
 
-The tests of the instance content are described in the honesty notes of the
-instance README.
-
-Documentation `docs/` (2026-10-13): rendered with cookiecutter 2.7.1 for
-both fixtures and with the `cookiecutter_all.yaml` of the meta repository;
-`tests/check_docs.py` passes for each (Sphinx 9.1.0, myst-parser 5.1.0,
-sphinxcontrib-mermaid 2.1.1, on Python 3.13 and 3.14.6) and the placeholder
-check finds nothing. The workflow file passes actionlint 1.7.12; the
-workflow itself has not run. Content: taken from the previous instance
-README, `dotenv.dist`, the compose files, the `Dockerfile` and the
-workflows. Also checked (2026-10-13): one Sphinx project per language with
-the pages of all ten service templates (rendered with `cookiecutter_all.yaml`),
-the instance chapter of the meta repository and ifdd-be-core with its
-OpenAPI document builds with `-W` and no suppressed warnings, so every cross
-reference resolves; the Mermaid diagrams of all services, and of the option
-variants of the fixtures, render in headless Chromium 141.0.7390.37
-(Playwright 1.56.0, Mermaid 11.12.1 served locally).
-
-`.env` loadable by a shell and the plugin reference (2026-10-13): rendered
-with cookiecutter 2.7.1 for both fixtures and with `cookiecutter_all.yaml`.
-`set -a; . ./.env; set +a` in bash 5.2.21 leaves valid JSON in
-`IFDD_CT_ASPECTS` (before: `product,: command not found`, empty value);
-`docker compose config` (v5.5.1) reads the same value with and without the
-quotes; the hook rejects a single quote. Both checks fail against the
-previous template. The page of `ifdd-ct --markdown` builds with Sphinx 9.1.0
-and myst-parser 5.1.0 with `-W` for each rendered instance, and inside the
-full documentation of all services in en and de; a broken label fails that
-build. The workflow files pass actionlint 1.7.12; they have not run.
+Some parts of this repository, in particular the tests, the test data and the
+documentation, were developed or improved with the help of large language
+models (LLMs). All changes were reviewed and released by the maintainer.
 
 ## Related
 
