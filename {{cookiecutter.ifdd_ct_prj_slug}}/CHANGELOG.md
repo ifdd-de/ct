@@ -1,5 +1,10 @@
 # Changelog
 
+## [26.11.11] - 2026-11-24
+
+- Version 26.11.11; image on Python 3.15 (`PYTHON_IMAGE`), `requirements.txt`
+  resolved for 3.15 (see the template CHANGELOG).
+
 ## [26.11.1] - 2026-11-14
 
 - Documentation: architecture diagram in PlantUML; README without test

@@ -30,7 +30,7 @@ jobs:
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
-          python-version: "3.14"
+          python-version: "3.15"
 
       - name: Install tooling
         run: pip install cookiecutter
@@ -157,12 +157,12 @@ jobs:
           repository: ifdd-de/schema
           path: schema
 
-      # 3.13 for the backend, 3.14 (the last one, hence the default) for ct.
+      # 3.13 for the backend, 3.15 (the last one, hence the default) for ct.
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: |
             3.13
-            3.14
+            3.15
 
       - name: Render keycloak, schema and ct with one configuration
         run: |

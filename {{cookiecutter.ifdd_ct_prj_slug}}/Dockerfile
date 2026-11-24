@@ -3,9 +3,9 @@
 # libraries for planned plugins and this instance's private plugins.
 #
 # For reproducible builds pin the base image by digest, e.g.
-#   python:3.14-slim@sha256:<digest>
+#   python:3.15-slim@sha256:<digest>
 
-ARG PYTHON_IMAGE=python:3.14-slim
+ARG PYTHON_IMAGE=python:3.15-slim
 
 FROM ${PYTHON_IMAGE} AS build
 WORKDIR /build
