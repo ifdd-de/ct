@@ -5,7 +5,7 @@
 
 One image holds the command line, the built-in plugins, the libraries for
 planned plugins and the plugins in `private/`. `Dockerfile` builds in two
-stages from `python:3.14-slim` (`PYTHON_IMAGE`): the first installs
+stages from `python:3.15-slim` (`PYTHON_IMAGE`): the first installs
 `requirements.txt` and the package, the second copies the result and
 `private/`, and runs as an unprivileged user (UID 10001; compose overrides it
 with `IFDD_CT_UID`/`IFDD_CT_GID`).
@@ -17,14 +17,14 @@ with `IFDD_CT_UID`/`IFDD_CT_GID`).
 The script builds with `--pull` and tags
 `{{ cookiecutter.ifdd_registry_url }}/{{ cookiecutter.ifdd_ct_prj_slug }}:{{ cookiecutter.ifdd_ct_version }}`,
 the image the production compose file runs. For reproducible builds pin the
-base image by digest (`PYTHON_IMAGE=python:3.14-slim@sha256:...`). Rebuild
+base image by digest (`PYTHON_IMAGE=python:3.15-slim@sha256:...`). Rebuild
 after every change of `src/`, `private/` or `requirements.txt`; `plugins/` is
 mounted and needs no build.
 
 ## Dependencies
 
 `requirements.txt` pins every dependency with hashes, resolved for Python
-3.14 on Linux x86_64 (the image); it also installs on Python 3.13, the
+3.15 on Linux x86_64 (the image); it also installs on Python 3.13, the
 lowest version the package accepts. After changing the dependencies in `pyproject.toml`,
 regenerate it with the command in its header (`uv pip compile ...`).
 
@@ -64,7 +64,7 @@ IFDD_IT_CA_BUNDLE=certs/ca.crt pytest --no-cov tests/integration
 
 `.github/workflows/ci.yml` runs on every push and pull request:
 
-- **tests** on Python 3.14 with the pinned, hash-checked dependencies;
+- **tests** on Python 3.15 with the pinned, hash-checked dependencies;
 - **image and compose files**: builds the image, lists the plugins, runs the
   faker without any service, checks that `check` warns by default and fails
   with `fail=true`, validates both compose files;

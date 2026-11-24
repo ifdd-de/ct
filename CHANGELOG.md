@@ -1,7 +1,12 @@
 # Changelog
 
-## [Unreleased]
+## [26.11.11] - 2026-11-24
 
+- Version aligned across all ifdd-de repositories: `ifdd_ct_version` 26.11.11.
+- Image and CI on Python 3.15: `PYTHON_IMAGE=python:3.15-slim` (was 3.14),
+  tests of the template and of the instance on 3.15; `requirements.txt`
+  resolved for 3.15 (PyYAML 6.0.3 -> 6.0.4, the first release with cp315
+  wheels; all other pins unchanged).
 - CI: GitHub Actions pinned to commit SHAs (version as comment),
   `persist-credentials: false` on every checkout; the same in the workflows of
   the instance.

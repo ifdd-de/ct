@@ -10,9 +10,9 @@ documentation; this file covers the template.
 ## Create an instance
 
 ```bash
-cruft create --checkout v26.11.1 https://github.com/ifdd-de/ct
+cruft create --checkout v26.11.11 https://github.com/ifdd-de/ct
 # or with the organisation's meta file
-cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.11.1 https://github.com/ifdd-de/ct
+cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.11.11 https://github.com/ifdd-de/ct
 ```
 
 ## Variables
@@ -21,7 +21,7 @@ cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.11.1 
 |---|---|---|
 | `ifdd_ct_prj_name` | `CT` | display name |
 | `ifdd_ct_prj_slug` | from the name | directory, image name |
-| `ifdd_ct_version` | `26.11.1` | package version, image tag |
+| `ifdd_ct_version` | `26.11.11` | package version, image tag |
 | `ifdd_ct_log_level` | `WARNING` | `IFDD_CT_LOG_LEVEL` |
 | `ifdd_be_url` | `https://rest` | `IFDD_CT_BE_URL`, `@id`s of example and generated data |
 | `ifdd_be_aspects` | products/functions/locations/organisations | `IFDD_CT_ASPECTS` |
@@ -36,7 +36,7 @@ cruft create --no-input --config-file cookiecutter_all.yaml --checkout v26.11.1 
 
 All of them except `ifdd_ct_version` already exist in the organisation's
 `cookiecutter_all.yaml` under these names (shared with be, schema, type,
-unit and proxy). Add `ifdd_ct_version: 26.11.1` there if the version should
+unit and proxy). Add `ifdd_ct_version: 26.11.11` there if the version should
 come from the meta file as well.
 
 The client secret is deliberately not a template variable: copy
